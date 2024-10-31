@@ -32,11 +32,11 @@
   tasks:
     - name: Include vars
       ansible.builtin.include_vars:
-       file: "vars/fgt_vars/vars.yml"
+        file: "vars/fgt_vars/vars.yml"
     - name: Insert new address
       fortinet.fortios.fortios_firewall_address:
-       access_token: "{{ api_token }}"
-       state: present
-       firewall_address:
-         name: "{{ name }}"
-         subnet: "{{ subnet }}"
+        access_token: "{{ api_token }}"
+        state: present
+        firewall_address:
+          name: "{{ name }}"
+          subnet: "{{ subnet }}"
