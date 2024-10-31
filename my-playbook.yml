@@ -1,0 +1,42 @@
+---
+- name: Create new user
+  hosts: windows_group
+  tasks:
+   - name: Include vars
+     ansible.builtin.include_vars:
+      file: "vars/win_vars/vars.yml"
+   - name: User gets created
+     ansible.windows.win_user:
+       state: present
+       name: "{{ username }}"
+       password: "{{ pswd }}"
+       groups:
+        - "{{ group }}"
+# - name: Ping Fortigate
+#   hosts: fortigate
+#   gather_facts: false
+#   vars:
+#     ansible_connection: ssh
+  # tasks:
+  #   - name: Execute ping from Fortigate to 8.8.8.8
+  #     raw: execute ping 8.8.8.8
+  #     register: ping_result
+
+  #   - name: Show ping result
+  #     debug:
+  #       var: ping_result.stdout_lines
+- name: Configure firewall address on Fortigate
+  hosts: fgt_group
+  gather_facts: false
+  connection: httpapi
+  tasks:
+    - name: Include vars
+      ansible.builtin.include_vars:
+       file: "vars/fgt_vars/vars.yml"
+    - name: Insert new address
+      fortinet.fortios.fortios_firewall_address:
+       access_token: "{{ api_token }}"
+       state: present
+       firewall_address:
+         name: "{{ name }}"
+         subnet: "{{ subnet }}"

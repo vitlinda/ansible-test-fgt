@@ -1,0 +1,13 @@
+all:
+  children:
+    fgt_group:
+      hosts:
+        fgt1:
+          ansible_host: 10.255.5.247
+        fgt2:
+          ansible_host: 10.255.5.252
+    windows_group:
+      hosts:
+        windows_vm:
+          ansible_host: 10.255.6.169
+
